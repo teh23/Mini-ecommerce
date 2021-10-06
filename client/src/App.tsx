@@ -12,13 +12,15 @@ function App() {
     console.log('test')
     axios.get('/api')
       .then(res => setState(res.data))
+    console.log(data)
 
-  }, [])
+  })
   if (!data) return <>Loading...</>
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
+        <div className="bg-gray-300 h-10 w-full"></div>
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>

@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 app.use(cors());
 app.use(express.static(path.resolve(__dirname, "./client/build")));
-app.get("/", (request, response) => {
+app.get("*", (request, response) => {
     response.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
 });
 

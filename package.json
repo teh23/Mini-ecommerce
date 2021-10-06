@@ -10,6 +10,7 @@
         "server": "nodemon index.js",
         "start": "node index.js",
         "dev": "concurrently \"npm run server\" \"npm run client",
-        "build:client": "npm run build --prefix client"
+        "build": "npm run build --prefix client",
+        "install": "cd ./client & npm instal"
     }
 }

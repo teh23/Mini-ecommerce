@@ -1,1 +1,3 @@
 GET http://localhost:3001/api/product/17331
+###
+GET http://localhost:3001/api/product/1733

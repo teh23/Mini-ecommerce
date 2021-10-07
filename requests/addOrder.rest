@@ -1,0 +1,23 @@
+POST http://localhost:3001/api/order HTTP/1.1
+content-type: application/json
+
+{
+    "productId": 1731,
+    "quantity": 100
+}
+###
+POST http://localhost:3001/api/order HTTP/1.1
+content-type: application/json
+
+{
+    "productId": 'asd',
+    "quantity": 100
+}
+###
+POST http://localhost:3001/api/order HTTP/1.1
+content-type: application/json
+
+{
+    "productId": 1731,
+    "quantity": 10000000
+}

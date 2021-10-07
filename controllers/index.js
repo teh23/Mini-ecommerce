@@ -1,1 +1,2 @@
-module.exports = require("./product.controller");
+module.exports.product = require("./product.controller");
+module.exports.order = require("./order.controller");

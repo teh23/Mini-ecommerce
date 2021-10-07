@@ -1,11 +1,6 @@
 const router = require("express").Router();
-const data = require("../globals").data;
+const getOrderById = require("../controllers").order.getOrderById;
 
-router.get("/", (req, res) => {
-    res.send("asd");
-    data.push("asd");
-    console.log("asd");
-    console.log(data);
-});
+router.get("/:id", getOrderById);
 
 module.exports = router;

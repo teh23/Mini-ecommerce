@@ -20,4 +20,27 @@ const findProductById = async (id) => {
     return products;
 };
 
-module.exports = { addProduct, findProduct, findProductById };
+const decreaseProduct = async ({ productId, quantity }) => {
+    try {
+        const product = await findProductById(productId);
+
+        if (product) {
+            const subtraction = product.stock - quantity;
+            if (subtraction >= 0) {
+                product.stock = subtraction;
+                console.log(product);
+                await Product.updateOne(
+                    { productId: productId },
+                    { stock: product.stock }
+                );
+
+                console.log(product);
+                return product;
+            }
+        }
+    } catch {
+        return 404;
+    }
+};
+
+module.exports = { addProduct, findProduct, findProductById, decreaseProduct };

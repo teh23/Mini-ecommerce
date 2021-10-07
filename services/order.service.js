@@ -15,26 +15,19 @@ const findOrderById = async (id) => {
 };
 
 const addOrder = async (data) => {
-    const { productId, quantity } = data;
     try {
-        const product = await products.findOne({ productId: productId });
-
-        if (product) {
-            const subtraction = product.stock - quantity;
-            if (subtraction < 0) {
-                return 400;
-            } else {
-                const newOrder = new orders(data);
-                const edit = await decreaseProduct(data);
-                console.log(edit);
-                const save = await newOrder.save();
-                return save._id;
-            }
-        } else {
+        const edit = await decreaseProduct(data);
+        if (edit === 404) {
             return 404;
         }
+        if (edit === 400) {
+            return 400;
+        }
+        console.log(edit);
+        const save = await new orders(data).save();
+        return save._id;
     } catch (err) {
-        return null;
+        return 404;
     }
 };
 

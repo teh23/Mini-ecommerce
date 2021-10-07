@@ -1,7 +1,8 @@
-const Product = require("../models/product");
+const Products = require("../models/product");
+
 const addProduct = async (obj) => {
-    if (!(await Product.findOne({ productId: obj.productId }))) {
-        const newProduct = new Product(obj);
+    if (!(await Products.findOne({ productId: obj.productId }))) {
+        const newProduct = new Products(obj);
         await newProduct.save();
     } else {
         console.log("#############################################");
@@ -9,11 +10,11 @@ const addProduct = async (obj) => {
 };
 
 const findProduct = async () => {
-    const products = await Product.find({}, { _id: 0, __v: 0 });
+    const products = await Products.find({}, { _id: 0, __v: 0 });
     return products;
 };
 const findProductById = async (id) => {
-    const products = await Product.findOne(
+    const products = await Products.findOne(
         { productId: id },
         { _id: 0, __v: 0 }
     );
@@ -23,19 +24,20 @@ const findProductById = async (id) => {
 const decreaseProduct = async ({ productId, quantity }) => {
     try {
         const product = await findProductById(productId);
-
+        console.log(product);
         if (product) {
             const subtraction = product.stock - quantity;
             if (subtraction >= 0) {
                 product.stock = subtraction;
-                console.log(product);
-                await Product.updateOne(
+
+                await Products.updateOne(
                     { productId: productId },
                     { stock: product.stock }
                 );
 
-                console.log(product);
                 return product;
+            } else {
+                return 400;
             }
         }
     } catch {

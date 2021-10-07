@@ -1,22 +1,23 @@
 const express = require("express");
 const path = require("path");
 const cors = require("cors");
-
+const WebSocket = require("./websocket");
+const app = require("./app");
 const isDev = process.env.NODE_ENV !== "production";
 const PORT = process.env.PORT || 3001;
+const mongoose = require("mongoose");
 
-const app = express();
-app.use(cors());
-app.use(express.static(path.resolve(__dirname, "./client/build")));
+const url = process.env.DB_URL;
 
-app.get("/api", (req, res) => {
-    console.log("log");
-    res.send("hiho");
-});
+mongoose
+    .connect(url)
+    .then((result) => {
+        console.log("connected to MongoDB");
+    })
+    .catch((error) => {
+        console.log("error connecting to MongoDB:", error.message);
+    });
 
-app.get("*", (request, response) => {
-    response.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
-});
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });

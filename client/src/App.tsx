@@ -14,7 +14,7 @@ function App() {
       .then(res => setState(res.data))
     console.log(data)
 
-  })
+  }, [])
   if (!data) return <>Loading...</>
   return (
     <div className="App">
@@ -30,7 +30,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          {data}
+          {'gigo'}
         </a>
       </header>
     </div>

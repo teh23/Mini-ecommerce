@@ -30,7 +30,9 @@ function App() {
 
             isInitialMount.current = false
         } else {
-            const sse = new EventSource("http://localhost:3001/api/product")
+            //on dev change to :3001 proxy dont work with eventsoruce
+            const sse = new EventSource("api/product")
+            console.log(sse)
             sse.onmessage = async (e) => {
                 console.log(e)
                 setState(await JSON.parse(e.data))
@@ -39,11 +41,11 @@ function App() {
 
 
         }
-        return
+
     }, [isInitialMount.current])
 
     const orderProduct = async (e: any, productId: number) => {
-
+        e.preventDefault()
         const post = await axios
             .post("http://localhost:3001/api/order", {
                 productId: productId,

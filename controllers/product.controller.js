@@ -2,15 +2,12 @@ const Products = require("../models/product");
 const findProduct = require("../services").productService.findProduct;
 const findProductById = require("../services").productService.findProductById;
 const messageBus = require("../globals/event");
+const Data = require("../globals/data");
 
-const getAllProduct = async (req, res) => {
+const getAllProduct = async (req, res, next) => {
     if (req.headers.accept === "text/event-stream") {
         res.setHeader("Content-Type", "text/event-stream");
-        messageBus.on("message", async () => {
-            const allProduct = await findProduct();
-            res.write(`data:  ${JSON.stringify(allProduct)}\n\n`);
-            //console.log(messageBus.listenerCount("message"));
-        });
+        Data.push(res);
     } else {
         const allProduct = await findProduct();
         res.send(JSON.stringify(allProduct));

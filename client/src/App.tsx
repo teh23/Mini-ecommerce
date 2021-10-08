@@ -1,40 +1,56 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import 'axios'
 import axios from 'axios';
+import { setTimeout } from 'timers';
+
+interface Product {
+    productId: number,
+    name: string,
+    price: number,
+    stock: number
+}
 
 function App() {
 
-  const [data, setState] = useState('')
+    const [data, setState] = useState([] as Product[])
+    const isInitialMount = useRef(true)
+    const sse = new EventSource("http://127.0.0.1:3001/api/product")
+    useEffect(() => {
+        if (isInitialMount.current) {
+            const fetchInitialApi = async () => {
+                const initial = await axios.get("http://127.0.0.1:3001/api/product")
+                setState(initial.data)
+            }
+            fetchInitialApi()
 
-  useEffect(() => {
-    console.log('test')
-    axios.get('/api')
-      .then(res => setState(res.data))
-    console.log(data)
+            isInitialMount.current = false
+        } else {
+            console.log("sse")
+            sse.onmessage = (e) => {
 
-  }, [])
-  if (!data) return <>Loading...</>
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <div className="bg-gray-300 h-10 w-full"></div>
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {'gigo'}
-        </a>
-      </header>
-    </div>
-  );
+                setState(JSON.parse(e.data))
+            }
+        }
+
+    })
+    if (!data) return <>Loading...</>
+    return (
+        <div className="App">
+            <header className="App-header">
+                <ul>
+                    {data.map((ele, idx) => {
+
+                        return (
+                            <li key={idx}>Name: {ele.name} Stock: {ele.stock}</li>
+                        )
+                    })}
+                </ul>
+
+            </header>
+        </div>
+    );
 }
 
 export default App;

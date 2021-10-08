@@ -10,7 +10,7 @@ POST http://localhost:3001/api/order HTTP/1.1
 content-type: application/json
 
 {
-    "productId": 'asd',
+    "productId": "asd",
     "quantity": 100
 }
 ###

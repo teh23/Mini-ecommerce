@@ -40,24 +40,21 @@ wsServer.on("request", function (request) {
 
     var connection = request.accept(request.origin);
     console.log(new Date() + " Connection accepted.");
-    connection.on("message", function (message) {
-        if (message.type === "utf8") {
-            console.log("Received Message: " + message.utf8Data);
-        } else if (message.type === "binary") {
-            console.log(
-                "Received Binary Message of " +
-                    message.binaryData.length +
-                    " bytes"
-            );
-            connection.sendBytes(message.binaryData);
-        }
-    });
+    connection.on("message", function (message) {});
     connection.on("close", function (reasonCode, description) {
         console.log(
             new Date() + " Peer " + connection.remoteAddress + " disconnected."
         );
     });
     setInterval(() => {
-        connection.sendUTF(Math.random() * 100);
+        const test = {
+            operation: "product.stock.decrease",
+            correlationId: "123123",
+            payload: {
+                productId: 1730 + Math.floor(Math.random() * 10),
+                stock: 34258,
+            },
+        };
+        connection.sendUTF(JSON.stringify(test));
     }, 1500);
 });

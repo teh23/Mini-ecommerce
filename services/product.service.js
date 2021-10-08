@@ -19,6 +19,7 @@ const findProduct = async () => {
     const products = await Products.find({}, { _id: 0, __v: 0 });
     return products;
 };
+
 const findProductById = async (id, getTrueId = false) => {
     const products = await Products.findOne(
         { productId: id },
@@ -43,7 +44,7 @@ const decreaseProduct = async ({ productId, quantity }) => {
                     { stock: product.stock }
                 );
 
-                Data.push({
+                messageBus.emit("send", {
                     operation: "product.stock.decrease",
                     payload: {
                         productId: product.productId,
@@ -53,7 +54,6 @@ const decreaseProduct = async ({ productId, quantity }) => {
                         product._id
                     ).toString(),
                 });
-                messageBus.emit("send");
 
                 // if (get) {
                 //     messageBus.emit("message", productId);
@@ -78,9 +78,9 @@ const editProduct = async ({ productId, stock }) => {
                 { productId: productId },
                 { stock: stock }
             );
-            if (get) {
-                messageBus.emit("message", productId);
-            }
+            // if (get) {
+            //     messageBus.on("message", productId);
+            // }
 
             return product;
         } else {

@@ -16,8 +16,8 @@ function App() {
 
     const [data, setState] = useState([] as Product[])
     const isInitialMount = useRef(true)
-    const sse = new EventSource("http://localhost:3001/api/product")
-    //TODO FIX PROXY
+
+
 
 
     useEffect(() => {
@@ -30,14 +30,16 @@ function App() {
 
             isInitialMount.current = false
         } else {
-
+            const sse = new EventSource("http://localhost:3001/api/product")
             sse.onmessage = async (e) => {
                 console.log(e)
                 setState(await JSON.parse(e.data))
             }
 
-        }
 
+
+        }
+        return
     }, [isInitialMount.current])
 
     const orderProduct = async (e: any, productId: number) => {

@@ -23,7 +23,6 @@ const addOrder = async (data) => {
         if (edit === 400) {
             return 400;
         }
-        console.log(edit);
         const save = await new orders(data).save();
         return save._id;
     } catch (err) {

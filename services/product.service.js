@@ -1,7 +1,11 @@
 const Products = require("../models/product");
+const messageBus = require("../globals/event");
 
 const addProduct = async (obj) => {
     if (!(await Products.findOne({ productId: obj.productId }))) {
+        //clearing collection before new connection
+        await Products.deleteMany({});
+
         const newProduct = new Products(obj);
         await newProduct.save();
     } else {
@@ -24,16 +28,20 @@ const findProductById = async (id) => {
 const decreaseProduct = async ({ productId, quantity }) => {
     try {
         const product = await findProductById(productId);
-        console.log(product);
+        //console.log(product);
         if (product) {
             const subtraction = product.stock - quantity;
             if (subtraction >= 0) {
                 product.stock = subtraction;
 
-                await Products.updateOne(
+                const get = await Products.updateOne(
                     { productId: productId },
                     { stock: product.stock }
                 );
+                if (get) {
+                    messageBus.emit("message", productId);
+                    console.log("DECRESE");
+                }
 
                 return product;
             } else {
@@ -49,10 +57,13 @@ const editProduct = async ({ productId, stock }) => {
     try {
         const product = await findProductById(productId);
         if (product) {
-            await Products.updateOne(
+            const get = await Products.updateOne(
                 { productId: productId },
                 { stock: stock }
             );
+            if (get) {
+                messageBus.emit("message", productId);
+            }
 
             return product;
         } else {

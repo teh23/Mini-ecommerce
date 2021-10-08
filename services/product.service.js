@@ -45,4 +45,28 @@ const decreaseProduct = async ({ productId, quantity }) => {
     }
 };
 
-module.exports = { addProduct, findProduct, findProductById, decreaseProduct };
+const editProduct = async ({ productId, stock }) => {
+    try {
+        const product = await findProductById(productId);
+        if (product) {
+            await Products.updateOne(
+                { productId: productId },
+                { stock: stock }
+            );
+
+            return product;
+        } else {
+            return { error: "Not found" };
+        }
+    } catch {
+        return { error: "Error" };
+    }
+};
+
+module.exports = {
+    addProduct,
+    findProduct,
+    findProductById,
+    decreaseProduct,
+    editProduct,
+};

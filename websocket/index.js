@@ -16,10 +16,11 @@ const webSocketCallback = (data) => {
         error(connection);
         message(connection);
 
-        messageBus.on("send", () => {
+        messageBus.on("send", (val) => {
             console.log("##########################################");
-            console.log(Data[0]);
-            connection.sendUTF(JSON.stringify(Data.shift()));
+            console.log(val);
+            console.log(messageBus.listenerCount());
+            connection.sendUTF(JSON.stringify(val));
             //connection.sendUTF(JSON.stringify(Data.shift()));
 
             console.log("##########################################after");

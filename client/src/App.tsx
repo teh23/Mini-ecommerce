@@ -16,10 +16,10 @@ function App() {
 
     const [data, setState] = useState([] as Product[])
     const isInitialMount = useRef(true)
-
-    //TODO FIX PROXY
     const sse = new EventSource("http://localhost:3001/api/product")
-    console.log(sse)
+    //TODO FIX PROXY
+
+
     useEffect(() => {
         if (isInitialMount.current) {
             const fetchInitialApi = async () => {
@@ -30,14 +30,28 @@ function App() {
 
             isInitialMount.current = false
         } else {
-            console.log("sse")
-            sse.onmessage = async (e) => {
 
+            sse.onmessage = async (e) => {
+                console.log(e)
                 setState(await JSON.parse(e.data))
             }
+
         }
 
-    })
+    }, [isInitialMount.current])
+
+    const orderProduct = async (e: any, productId: number) => {
+
+        const post = await axios
+            .post("http://localhost:3001/api/order", {
+                productId: productId,
+                quantity: 10
+            })
+
+        console.log(post.data)
+        console.log(productId)
+    }
+
     if (!data) return <>Loading...</>
     return (
         <div className="App">
@@ -46,7 +60,9 @@ function App() {
                     {data.map((ele, idx) => {
 
                         return (
-                            <li key={idx}>Name: {ele.name} Stock: {ele.stock}</li>
+                            <form key={idx}>
+                                <li >Id: {ele.productId} Name: {ele.name} Stock: {ele.stock} <button onClick={e => orderProduct(e, ele.productId)}>ZAMÓW</button></li>
+                            </form>
                         )
                     })}
                 </ul>

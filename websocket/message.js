@@ -29,7 +29,7 @@ const message = (connection) => {
                         res.write(`data:  ${JSON.stringify(allProduct)}\n\n`);
                     });
                     let test = Data.filter((res) => !res._closed);
-                    console.log(Data.length);
+
                     Data.length = 0;
                     Data.push(...test);
                 }

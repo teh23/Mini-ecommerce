@@ -1,5 +1,4 @@
 const AddProduct = require("../services").productService.addProduct;
-const Data = require("../globals").data;
 
 const editProduct = require("../services/index").productService.editProduct;
 
@@ -14,11 +13,12 @@ const message = (connection) => {
             });
         } else {
             //Further transmission
-            console.log("msg");
+            console.log(msg);
             if (
                 msg.operation === "product.stock.decreased" ||
                 msg.operation === "product.stock.updated"
             ) {
+                //console.log(msg.payload);
                 const editOperation = await editProduct(msg.payload);
 
                 //TODO error handling

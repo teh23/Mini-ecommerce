@@ -9,6 +9,7 @@ const getAllProduct = async (req, res) => {
         messageBus.on("message", async () => {
             const allProduct = await findProduct();
             res.write(`data:  ${JSON.stringify(allProduct)}\n\n`);
+            //console.log(messageBus.listenerCount("message"));
         });
     } else {
         const allProduct = await findProduct();

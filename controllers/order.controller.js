@@ -13,7 +13,6 @@ const getOrderById = async (req, res) => {
 
 const postOrder = async (req, res) => {
     const data = req.body;
-    console.log("orderr");
     const addedOrder = await addOrder(data);
     res.send(addedOrder);
 };

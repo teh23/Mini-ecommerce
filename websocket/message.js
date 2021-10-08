@@ -1,7 +1,7 @@
 const AddProduct = require("../services").productService.addProduct;
-
+const Data = require("../globals/data");
 const editProduct = require("../services/index").productService.editProduct;
-
+const findProduct = require("../services").productService.findProduct;
 const message = (connection) => {
     connection.on("message", async (message) => {
         const msg = JSON.parse(message.utf8Data);
@@ -20,6 +20,19 @@ const message = (connection) => {
             ) {
                 //console.log(msg.payload);
                 const editOperation = await editProduct(msg.payload);
+
+                //TODO Optimize, organize
+                if (Data.length > 0) {
+                    const allProduct = await findProduct();
+
+                    Data.forEach((res) => {
+                        res.write(`data:  ${JSON.stringify(allProduct)}\n\n`);
+                    });
+                    let test = Data.filter((res) => !res._closed);
+                    console.log(Data.length);
+                    Data.length = 0;
+                    Data.push(...test);
+                }
 
                 //TODO error handling
                 if (editOperation?.error) {

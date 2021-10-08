@@ -1,1 +1,5 @@
 GET http://localhost:3001/api/product
+
+###
+GET http://localhost:3001/api/product
+content-type: text/event-stream

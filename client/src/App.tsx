@@ -16,11 +16,14 @@ function App() {
 
     const [data, setState] = useState([] as Product[])
     const isInitialMount = useRef(true)
-    const sse = new EventSource("http://127.0.0.1:3001/api/product")
+
+    //TODO FIX PROXY
+    const sse = new EventSource("http://localhost:3001/api/product")
+    console.log(sse)
     useEffect(() => {
         if (isInitialMount.current) {
             const fetchInitialApi = async () => {
-                const initial = await axios.get("http://127.0.0.1:3001/api/product")
+                const initial = await axios.get("api/product")
                 setState(initial.data)
             }
             fetchInitialApi()
@@ -28,9 +31,9 @@ function App() {
             isInitialMount.current = false
         } else {
             console.log("sse")
-            sse.onmessage = (e) => {
+            sse.onmessage = async (e) => {
 
-                setState(JSON.parse(e.data))
+                setState(await JSON.parse(e.data))
             }
         }
 

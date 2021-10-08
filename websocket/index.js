@@ -1,5 +1,10 @@
 const WebSocket = require("websocket").client;
 const AddProduct = require("../services").productService.addProduct;
+const Data = require("../globals").data;
+const messageBus = require("../globals/event");
+const editProduct =
+    require("../services/index").productService.editProduct;
+
 const webSocketCallback = (data) => {
     var client = new WebSocket();
 
@@ -16,7 +21,7 @@ const webSocketCallback = (data) => {
             console.log("Connection Error: " + error.toString());
         });
         connection.on("close", async () => {
-            console.log("echo-protocol Connection Closed");
+            console.log("wsad");
         });
         connection.on("message", async (message) => {
             const msg = JSON.parse(message.utf8Data);
@@ -26,11 +31,19 @@ const webSocketCallback = (data) => {
                     AddProduct(obj);
                 });
             } else {
-                console.log(msg);
+                messageBus.emit("message", msg);
+                console.log(msg)
+                if (msg.operation === "product.stock.decreased") {
+                    const editOperation = await editProduct(msg.payload)
+                    if(editOperation?.error){
+                        console.log(editOperation)
+                    };
+                    console.log(editOperation)
+                }
             }
             if (connection.connected) {
-                if (data.length > 0) {
-                    connection.sendUTF(data.shift());
+                if (Data.length > 0) {
+                    //connection.sendUTF(Data.shift());
                 }
             }
         });

@@ -15,8 +15,10 @@
         "client": "npm start --prefix client",
         "server": "nodemon index.js --ignore client",
         "start": "node index.js",
-        "dev": "concurrently \"npm run server\" \"npm run client",
+        "dev:windows": "concurrently \"npm run server\" \"npm run client\"",
+        "dev:linux": "npm run kill & npm run server & npm run client",
         "build": "npm run build --prefix client",
-        "install": "cd ./client & npm instal"
+        "install": "cd ./client & npm instal",
+        "kill": "pkill -f nodemon"
     }
 }

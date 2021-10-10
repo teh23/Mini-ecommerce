@@ -17,3 +17,7 @@ export interface IProduct {
     price: number
     stock: number
 }
+export interface IOrder {
+    productId: number
+    order: number
+}

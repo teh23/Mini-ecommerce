@@ -1,63 +1,71 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useProduct } from './context';
 
-
-enum Actions {
-  ADD = 'ADD',
-}
-
 function App() {
-  const { product, dispatch } = useProduct();
+    const { product } = useProduct();
+    const [orderNumber, setOrderNumber] = useState([] as number[])
 
+    useEffect(() => {
+        if (0 < product.length) {
+            console.log('comp')
+        }
+    })
 
+    const orderProduct = async (e: any, productId: number, index: number) => {
+        e.preventDefault();
+        await axios.post('http://localhost:3001/api/order', {
+            productId,
+            quantity: orderNumber[index],
+        });
+    };
 
-  const orderProduct = async (e: any, productId: number) => {
-    e.preventDefault();
-    const post = await axios.post('http://localhost:3001/api/order', {
-      productId,
-      quantity: 10,
-    });
-  };
+    const onChangeOrderNumber = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
+        const temp = orderNumber
+        temp[index] = parseInt(e.target.value)
+        setOrderNumber(temp)
+        //setOrderNumber(orderNumber)
 
-  if (!product) return <>Loading...</>;
-  return (
+    }
+    if (!product) return <>Loading...</>;
+    return (
 
-    <div className="App">
-      <header className="App-header">
-        asd
-        <ul>
-          {product.map((ele, idx) => {
-            console.log(ele);
-            return (
-              <form key={idx}>
-                <li>
-                  Id:
-                  {' '}
-                  {ele.productId}
-                  {' '}
-                  Name:
-                  {' '}
-                  {ele.name}
-                  {' '}
-                  Stock:
-                  {' '}
-                  {ele.stock}
-                  {' '}
-                  <button
-                    onClick={(e) => orderProduct(e, ele.productId)}
-                  >
-                    ZAMÓW
-                  </button>
-                </li>
-              </form>
-            );
-          })}
-        </ul>
-      </header>
-    </div>
+        <div className="App">
+            <header className="App-header">
+                asd
+                <ul>
+                    {product.map((ele, idx) => {
 
-  );
+                        return (
+
+                            <li key={idx}>
+                                Id:
+                                {' '}
+                                {ele.productId}
+                                {' '}
+                                Name:
+                                {' '}
+                                {ele.name}
+                                {' '}
+                                Stock:
+                                {' '}
+                                {ele.stock}
+                                {' '}
+                                <input min={0} max={ele.stock} type="number" onChange={e => onChangeOrderNumber(e, idx)} value={orderNumber[idx]} />
+                                <button
+                                    onClick={(e) => orderProduct(e, ele.productId, idx)}
+                                >
+                                    ZAMÓW
+                                </button>
+                            </li>
+
+                        );
+                    })}
+                </ul>
+            </header>
+        </div>
+
+    );
 }
 
 export default App;

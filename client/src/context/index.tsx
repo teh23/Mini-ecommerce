@@ -21,9 +21,9 @@ const Context: React.FunctionComponent<{
         }
         fetchInitialApi();
         const sse = new EventSource('http://localhost:3001/api/product');
-        console.log(sse);
+
         sse.onmessage = async (e) => {
-            console.log(e);
+
             dispatch({
                 type: Actions.INIT,
                 payload: await JSON.parse(e.data),

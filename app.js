@@ -1,24 +1,25 @@
-const express = require("express");
-const path = require("path");
-const cors = require("cors");
-const WebSocket = require("./websocket");
-const routes = require("./routes");
-const app = express();
-const data = require("./globals").data;
-const bodyParser = require("body-parser");
-WebSocket(data);
+const express = require('express')
+const path = require('path')
+const cors = require('cors')
+const WebSocket = require('./websocket')
+const routes = require('./routes')
+const app = express()
+const data = require('./globals').data
+const bodyParser = require('body-parser')
 
-app.use(cors());
+WebSocket()
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cors())
 
-app.use(bodyParser.json());
-app.use(express.static(path.resolve(__dirname, "./client/build")));
+app.use(bodyParser.urlencoded({ extended: false }))
 
-app.use("/api", routes);
+app.use(bodyParser.json())
+app.use(express.static(path.resolve(__dirname, './client/build')))
 
-app.get("*", (request, response) => {
-    response.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
-});
+app.use('/api', routes)
 
-module.exports = app;
+app.get('*', (request, response) => {
+    response.sendFile(path.resolve(__dirname, './client/build', 'index.html'))
+})
+
+module.exports = app

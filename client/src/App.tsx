@@ -1,68 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useProduct } from './context';
+import Row from './components/Row';
+
 
 function App() {
     const { product } = useProduct();
-    const [orderNumber, setOrderNumber] = useState([] as number[])
 
-    useEffect(() => {
-        if (0 < product.length) {
-            console.log('comp')
-        }
-    })
-
-    const orderProduct = async (e: any, productId: number, index: number) => {
-        e.preventDefault();
-        await axios.post('http://localhost:3001/api/order', {
-            productId,
-            quantity: orderNumber[index],
-        });
-    };
-
-    const onChangeOrderNumber = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
-        const temp = orderNumber
-        temp[index] = parseInt(e.target.value)
-        setOrderNumber(temp)
-        //setOrderNumber(orderNumber)
-
-    }
     if (!product) return <>Loading...</>;
     return (
-
-        <div className="App">
-            <header className="App-header">
-                asd
-                <ul>
+        <div className="bg-gray-200 min-h-screen min-w-full">
+            <div className=" container xl:w-2/3 2xl:w-3/5 mx-auto">
+                <ul className=" ">
                     {product.map((ele, idx) => {
-
+                        console.log(ele)
                         return (
 
-                            <li key={idx}>
-                                Id:
-                                {' '}
-                                {ele.productId}
-                                {' '}
-                                Name:
-                                {' '}
-                                {ele.name}
-                                {' '}
-                                Stock:
-                                {' '}
-                                {ele.stock}
-                                {' '}
-                                <input min={0} max={ele.stock} type="number" onChange={e => onChangeOrderNumber(e, idx)} value={orderNumber[idx]} />
-                                <button
-                                    onClick={(e) => orderProduct(e, ele.productId, idx)}
-                                >
-                                    ZAMÓW
-                                </button>
-                            </li>
+                            <Row product={ele} key={idx} />
 
                         );
                     })}
                 </ul>
-            </header>
+
+            </div>
         </div>
 
     );

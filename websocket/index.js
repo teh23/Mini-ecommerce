@@ -1,4 +1,4 @@
-const WebSocket = require('websocket').client
+const WebSocket = require('ws')
 const message = require('./message')
 const close = require('./close')
 const error = require('./error')
@@ -6,28 +6,22 @@ const error = require('./error')
 const messageBus = require('../globals/event')
 
 const webSocketCallback = () => {
-    var client = new WebSocket()
+    var ws = new WebSocket('wss://mec-storage.herokuapp.com')
 
-    const sev = 'wss://mec-storage.herokuapp.com'
-    const test = 'ws://localhost:8080'
+    ws.onopen = function (test) {
+        console.log('web socket connection')
+    }
+    ws.onmessage = message
+    ws.onclose = close
+    ws.onerror = error
+    messageBus.on('send', (val) => {
+        console.log('##########################################')
+        console.log(val)
+        console.log(messageBus.listenerCount())
+        ws.send(JSON.stringify(val))
 
-    client.on('connect', async (connection) => {
-        console.log('WebSocket Client Connected')
-        close(connection)
-        error(connection)
-        message(connection)
-
-        messageBus.on('send', (val) => {
-            console.log('##########################################')
-            console.log(val)
-            console.log(messageBus.listenerCount())
-            connection.sendUTF(JSON.stringify(val))
-            //connection.sendUTF(JSON.stringify(Data.shift()));
-
-            console.log('##########################################after')
-        })
+        console.log('##########################################after')
     })
-    client.connect(sev, 'echo-protocol')
 }
 
 module.exports = webSocketCallback

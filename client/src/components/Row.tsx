@@ -26,18 +26,20 @@ const Row: React.FunctionComponent<{
 
 
     }
+
     return (
-        <li className={'bg-white flex w-full xl:p-4 space-x-4 border-b  p-2'}>
+        <li className={'bg-white flex  items-center w-full xl:p-4 space-x-4 border-b  h-58 p-2'}>
             <div className={``}>
                 <img
-                    src='https://via.placeholder.com/150x150'
+                    src='https://via.placeholder.com/300x250'
                     className={``}
                     alt=''
                     loading='lazy'
                 />
             </div>
-            <div className={`flex flex-col justify-between items-start my-2 `}>
-                <p className={` font-bold text-lg`}>{product.name}</p>
+            <div className={`flex flex-col justify-between items-start my-2 space-y-4 `}>
+                <p className={` font-bold text-xl`}>{product.name.toUpperCase()}</p>
+                <p className={`font-bold text-3xl my-2`}>{product.price / 100}</p>
                 <div className={`flex justify-beetwen items-center `}>
                     <BsDash className={` left-10  w-6  h-6 `} onClick={e => iconsButton(false)} />
                     <div>
@@ -48,7 +50,7 @@ const Row: React.FunctionComponent<{
                             className=' text-center border border-gray-800 w-8 lg:w-12 rounded h-8 '
                             onChange={onChangeOrderNumber}
                             value={orderNumber}
-                            defaultValue={1}
+
                         />
                         {` `}
                     </div>

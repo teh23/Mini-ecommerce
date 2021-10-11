@@ -10,7 +10,9 @@ function App() {
     if (!product) return <>Loading...</>;
     return (
         <div className="bg-gray-200 min-h-screen min-w-full">
-            <div className=" container xl:w-2/3 2xl:w-3/5 mx-auto">
+            <div className=" container xl:w-2/3 2xl:w-3/5 mx-auto bg-white rounded-xl">
+                <p className={"font-bold text-3xl p-4"}>Products</p>
+
                 <ul className=" ">
                     {product.map((ele, idx) => {
                         console.log(ele)

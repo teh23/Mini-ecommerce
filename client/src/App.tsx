@@ -1,78 +1,34 @@
-import React, { useEffect, useRef, useState } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import 'axios'
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { setTimeout } from 'timers';
+import { useProduct } from './context';
+import Row from './components/Row';
 
-interface Product {
-    productId: number,
-    name: string,
-    price: number,
-    stock: number
-}
 
 function App() {
-
-    const [data, setState] = useState([] as Product[])
-    const isInitialMount = useRef(true)
+    const { product } = useProduct();
 
 
+    if (!product) return <>Loading...</>;
 
-
-    useEffect(() => {
-        if (isInitialMount.current) {
-            const fetchInitialApi = async () => {
-                const initial = await axios.get("api/product")
-                setState(initial.data)
-            }
-            fetchInitialApi()
-
-            isInitialMount.current = false
-        } else {
-            //on dev change to :3001 proxy dont work with eventsoruce
-            const sse = new EventSource("api/product")
-            console.log(sse)
-            sse.onmessage = async (e) => {
-                console.log(e)
-                setState(await JSON.parse(e.data))
-            }
-
-
-
-        }
-
-    }, [isInitialMount.current])
-
-    const orderProduct = async (e: any, productId: number) => {
-        e.preventDefault()
-        const post = await axios
-            .post("http://localhost:3001/api/order", {
-                productId: productId,
-                quantity: 10
-            })
-
-        console.log(post.data)
-        console.log(productId)
-    }
-
-    if (!data) return <>Loading...</>
     return (
-        <div className="App">
-            <header className="App-header">
-                <ul>
-                    {data.map((ele, idx) => {
+        <div className="bg-gray-200 min-h-screen min-w-full">
+            <div className=" container xl:w-2/3 2xl:w-3/5 mx-auto bg-white rounded-xl">
+                <p className={"font-bold text-3xl p-4"}>Products</p>
 
+                <ul className=" ">
+                    {product.map((ele, idx) => {
+                        console.log(ele)
                         return (
-                            <form key={idx}>
-                                <li >Id: {ele.productId} Name: {ele.name} Stock: {ele.stock} <button onClick={e => orderProduct(e, ele.productId)}>ZAMÓW</button></li>
-                            </form>
-                        )
+
+                            <Row product={ele} key={idx} />
+
+                        );
                     })}
                 </ul>
 
-            </header>
+            </div>
         </div>
+
     );
 }
 

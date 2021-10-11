@@ -1,7 +1,7 @@
-const close = (connection) => {
-    connection.on("close", async () => {
-        console.log("Connection closed");
-    });
-};
+const webSocket = require('./')
+const close = async () => {
+    console.log('Reconnect will be attempted in 3 second.')
+    webSocket
+}
 
-module.exports = close;
+module.exports = close

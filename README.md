@@ -1,6 +1,16 @@
+# Instalacja
+
+```
+git clone https://github.com/teh23/MEC.git
+cd ./MEC && npm install
+DB_URL="<MONGODB_URL>" npm run dev
+```
+
+## <a href="https://powerful-eyrie-28917.herokuapp.com/">PREVIEW</a>
+
 # Wstęp do zadania rekrutacyjnego - Erli
 
-Stwórz mini platformę e-commerce - nazwijmy ją dla uproszczenia `MEC`. 
+Stwórz mini platformę e-commerce - nazwijmy ją dla uproszczenia `MEC`.
 
 MEC zawiera dwa modele danych -> model produktu oraz model zamówień złożonych na platformie.
 
@@ -35,10 +45,11 @@ Przykład zapytania:
 }
 ```
 
-Oczekiwane odpowiedzi: 
-- `200 OK` - Produkt został poprawnie zakupiony
-- `404 Not Found` - Produkt nie został znaleziony
-- `400 Bad Request` - Nie ma tylu sztuk w magazynie
+Oczekiwane odpowiedzi:
+
+-   `200 OK` - Produkt został poprawnie zakupiony
+-   `404 Not Found` - Produkt nie został znaleziony
+-   `400 Bad Request` - Nie ma tylu sztuk w magazynie
 
 Odpowiedź zwrotna powinna być w formacie JSON. W przypadku sukcesu należy zwrócić pole `orderId`, a w przypadku błędów pole `message` z odpowiednim dokładnym opisem.
 
@@ -49,8 +60,9 @@ GET /order/{orderId}
 ```
 
 Oczekiwane odpowiedzi:
-- `200 OK`
-- `404 Not Found`
+
+-   `200 OK`
+-   `404 Not Found`
 
 ## Szczegółowe informacje na temat produktu
 
@@ -59,8 +71,9 @@ GET /product/{productId}
 ```
 
 Oczekiwane odpowiedzi:
-- `200 OK`
-- `404 Not Found`
+
+-   `200 OK`
+-   `404 Not Found`
 
 ## Wszystkie produkty na platformie MEC
 
@@ -84,16 +97,17 @@ Oczekiwane odpowiedzi:
 Adres naszego Websocketa:<br />
 `wss://mec-storage.herokuapp.com`
 
-*Cała komunikacja z magazynem jest asynchroniczna*
+_Cała komunikacja z magazynem jest asynchroniczna_
 
 1. Podczas rozpoczęcia sesji magazyn wysyła informacje o produktach, które trzeba dodać do platformy `MEC`.
 
     Przykład wiadomości po rozpoczęciu połączenia:
+
     ```js
     [
-      { 
-        "productId": 1769, 
-        "name": "ogromny wóz", 
+      {
+        "productId": 1769,
+        "name": "ogromny wóz",
         "price": 88279, // wszystkie ceny są w groszach
         "stock": 28757
       },
@@ -110,6 +124,7 @@ Adres naszego Websocketa:<br />
 2. Jeżeli pojawi się zamówienie na platformie `MEC` poinformuj magazyn wysyłając wiadomość poprzez Websocket.
 
     Przykład wiadomości:
+
     ```js
     {
       "operation": "product.stock.decrease",
@@ -122,6 +137,7 @@ Adres naszego Websocketa:<br />
     ```
 
     Odpowiedź, którą może wysłać Websocket po jakimś czasie:
+
     ```js
     {
       "operation": "product.stock.decreased",
@@ -134,6 +150,7 @@ Adres naszego Websocketa:<br />
     ```
 
     Odpowiedź z błędem, które wysyła Websocket jeśli pójdzie coś nie tak (np. stock produktu wynosił 0)
+
     ```js
     {
       "operation": "product.stock.decrease.failed",
@@ -144,7 +161,8 @@ Adres naszego Websocketa:<br />
       }
     }
     ```
-3. Jeżeli pojawia się zamówienie *spoza platformy* `MEC` w magazynie to magazyn wysyła informację:
+
+3. Jeżeli pojawia się zamówienie _spoza platformy_ `MEC` w magazynie to magazyn wysyła informację:
 
     ```js
     {
@@ -156,6 +174,7 @@ Adres naszego Websocketa:<br />
       }
     }
     ```
+
 4. Magazyn co jakiś czas zmienia stocki swoich produktów, kiedy to robi wysyła informację:
     ```js
     {
@@ -169,6 +188,7 @@ Adres naszego Websocketa:<br />
     ```
 
 # Nieobowiązkowo
+
 1. Stwórz prosty leaderboard najlepiej sprzedających się produktów. <br/>Dodaj tym samym nowy endpoint w `API-MEC`
 
     ```http

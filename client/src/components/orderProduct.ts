@@ -8,7 +8,7 @@ const orderProduct = async (
 ) => {
     e.preventDefault()
     await axios
-        .post('http://localhost:3001/api/order', {
+        .post('/api/order', {
             productId,
             quantity: orderNumber,
         })

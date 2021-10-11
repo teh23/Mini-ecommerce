@@ -2,13 +2,12 @@ const WebSocket = require('ws')
 const message = require('./message')
 const close = require('./close')
 const error = require('./error')
-
 const messageBus = require('../globals/event')
 
 const webSocketCallback = () => {
     var ws = new WebSocket('wss://mec-storage.herokuapp.com')
 
-    ws.onopen = function (test) {
+    ws.onopen = function () {
         console.log('web socket connection')
     }
     ws.onmessage = message

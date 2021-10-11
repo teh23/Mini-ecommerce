@@ -30,11 +30,11 @@
         ]
     },
     "scripts": {
-        "client": "cross-env NODE_ENV=development npm start --prefix client",
-        "server": "cross-env NODE_ENV=development nodemon --config ",
+        "client": "npm start --prefix client",
+        "server": " nodemon --config ",
         "start": "node index.js",
-        "dev:windows": "concurrently \"npm run server\" \"npm run client\"",
-        "dev:linux": "cross-env NODE_ENV=development npm run kill & npm run server & npm run client",
+        "dev:windows": "cross-env SKIP_PREFLIGHT_CHECK=true concurrently \"npm run server\" \"npm run client\"",
+        "dev:linux": "SKIP_PREFLIGHT_CHECK=true npm run kill & npm run server & npm run client",
         "build": "SKIP_PREFLIGHT_CHECK=true npm run build --prefix client",
         "install": "npm install --prefix client",
         "kill": "pkill -f nodemon",

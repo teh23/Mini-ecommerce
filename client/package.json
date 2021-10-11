@@ -55,5 +55,6 @@
         "eslint-plugin-react-hooks": "^4.2.0",
         "postcss": "^7.0.39",
         "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.16"
-    }
+    },
+    "proxy": "http://localhost:3001"
 }

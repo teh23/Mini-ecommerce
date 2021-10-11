@@ -14,13 +14,14 @@ const Context: React.FunctionComponent<{
     useEffect(() => {
         const fetchInitialApi = async () => {
             const initial = await axios.get(
-                'http://localhost:3001/api/product',
+                '/api/product',
             );
+            console.log(initial)
             dispatch({ type: Actions.INIT, payload: initial.data });
 
         }
         fetchInitialApi();
-        const sse = new EventSource('http://localhost:3001/api/product');
+        const sse = new EventSource(`${process.env.NODE_ENV === 'development' ? "http://localhost:3001" : ''}/api/product`);
 
         sse.onmessage = async (e) => {
 

@@ -32,7 +32,7 @@
     "scripts": {
         "client": "cross-env NODE_ENV=development npm start --prefix client",
         "server": "cross-env NODE_ENV=development nodemon --config ",
-        "start": "cross-env NODE_ENV=production node index.js",
+        "start": "node index.js",
         "dev:windows": "cross-env NODE_ENV=development concurrently \"npm run server\" \"npm run client\"",
         "dev:linux": "cross-env NODE_ENV=development npm run kill & npm run server & npm run client",
         "build": "cross-env SKIP_PREFLIGHT_CHECK=true NODE_ENV=production npm run build --prefix client",

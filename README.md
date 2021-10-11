@@ -3,11 +3,7 @@
 ```
 git clone https://github.com/teh23/MEC.git
 cd ./MEC && npm install
-DB_URL="<MONGODB_URL>" npm run dev:linux
-
-||
-
-DB_URL="<MONGODB_URL>" npm run dev:windows
+DB_URL="<MONGODB_URL>" npm run dev
 ```
 
 ## <a href="https://powerful-eyrie-28917.herokuapp.com/">PREVIEW</a>

@@ -21,7 +21,7 @@ const Context: React.FunctionComponent<{
 
         }
         fetchInitialApi();
-        const sse = new EventSource(`${process.env.NODE_ENV === 'development' ? "http://localhost:3001" : ''}/api/product`);
+        const sse = new EventSource(`${process.env.NODE_ENV !== 'production' && 'http://localhost:3001'}/api/product`);
 
         sse.onmessage = async (e) => {
 

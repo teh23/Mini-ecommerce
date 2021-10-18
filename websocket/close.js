@@ -1,7 +1,9 @@
-const webSocket = require('./')
+const webSocket = require('./');
 const close = async () => {
-    console.log('Reconnect will be attempted in 3 second.')
-    webSocket
-}
+  console.log('Reconnect will be attempted in 2 second.');
+  setTime(() => {
+    webSocket;
+  }, 2000);
+};
 
-module.exports = close
+module.exports = close;

@@ -13,6 +13,7 @@
         "@types/react-dom": "^17.0.9",
         "autoprefixer": "^9.8.8",
         "axios": "^0.22.0",
+        "MEC": "file:..",
         "postcss": "^7.0.39",
         "react": "^17.0.2",
         "react-dom": "^17.0.2",

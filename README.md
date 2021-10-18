@@ -6,29 +6,22 @@ cd ./MEC && npm install
 DB_URL="<MONGODB_URL>" npm run dev
 ```
 
-## <a href="https://powerful-eyrie-28917.herokuapp.com/">PREVIEW</a>
+## [Preview](https://powerful-eyrie-28917.herokuapp.com)
 
-# Wstęp do zadania rekrutacyjnego - Erli
+# Mini platforma e-commerce
 
-Stwórz mini platformę e-commerce - nazwijmy ją dla uproszczenia `MEC`.
+## usecases:
+- Platforma zawiera dwa modele danych -> model produktu oraz model zamówień złożonych na platformie.
+- Platforma  powinien mieć przyjazną dla użytkownika warstwę frontendową.
+- Platforma  powinien udostępniać `REST API` 
+- Każdy produkt na platformie MEC ma swoją nazwę, cenę, liczbę sztuk dostępnych w magazynie oraz unikalny identyfikator.
+- Proces zamówienia na warstwie frontendowej odbywa się poprzez kliknięcie przycisku pod produktem `ZAMÓW TERAZ`.
+- Jeżeli brakuje produktu w magazynie przycisk `ZAMÓW TERAZ` powinien być zablokowany. (W razie problemów z synchronizacją powinien pokazywać się odpowiedni komunikat)
+- Klient powinien móc zamówić dowolną liczbę sztuk danego produktu (która oczywiście jest mniejsza bądź równa niż liczba sztuk dostępnych w magazynie)
 
-MEC zawiera dwa modele danych -> model produktu oraz model zamówień złożonych na platformie.
+Jakiekolwiek zmiany w bazie  (np. aktualizacja stanu magazynowego) powinny się pokazywać `w czasie rzeczywistym` w przeglądarce.
 
-MEC powinien mieć przyjazną dla użytkownika warstwę frontendową.
-
-MEC powinien udostępniać `REST API` (Polecenia `API-MEC` wymienione są niżej).
-
-Każdy produkt na platformie MEC ma swoją nazwę, cenę, liczbę sztuk dostępnych w magazynie oraz unikalny identyfikator.
-
-Proces zamówienia na warstwie frontendowej odbywa się poprzez kliknięcie przycisku pod produktem `ZAMÓW TERAZ`.
-
-Jeżeli brakuje produktu w magazynie przycisk `ZAMÓW TERAZ` powinien być zablokowany. (W razie problemów z synchronizacją powinien pokazywać się odpowiedni komunikat)
-
-Klient powinien móc zamówić dowolną liczbę sztuk danego produktu (która oczywiście jest mniejsza bądź równa niż liczba sztuk dostępnych w magazynie)
-
-Jakiekolwiek zmiany w bazie `MEC` (np. aktualizacja stanu magazynowego) powinny się pokazywać `w czasie rzeczywistym` w przeglądarce.
-
-# Polecenia API-MEC:
+# Polecenia API:
 
 ## Składanie zamówień
 
@@ -84,22 +77,15 @@ GET /products
 Oczekiwane odpowiedzi:
 `200 OK`
 
-# Wymagania dotyczące realizacji zadania
-
-1. Kod do rozwiązania umieść na prywatnym repozytorium na Github / GitLab / BitBucket, do którego udostępnisz nam później dostęp.
-2. Plusem będzie deployment aplikacji na np. Heroku / GCP / AWS.
-3. W README.md powinny zawierać się informację na temat tego jak odpalić MEC. (Może być tutaj instrukcja do odpalenia poprzez docker-compose / docker swarm / kubernetesa)
-4. Rozwiązanie powinno być napisane przy użyciu języka `javascript` lub `typescript`. Baza danych, którą sobie wybierzesz zależy od Ciebie (polecamy MongoDB, ale nie stanie się nic złego jak zrobisz to w np. inmemory db)
-5. Musisz skorzystać z naszego magazynu, który jest dostępny poprzez Websocketa.
 
 # Instrukcja Magazynu
 
-Adres naszego Websocketa:<br />
-`wss://mec-storage.herokuapp.com`
+Adres Websocketa:
+`wss://shielded-escarpment-92522.herokuapp.com/`
 
 _Cała komunikacja z magazynem jest asynchroniczna_
 
-1. Podczas rozpoczęcia sesji magazyn wysyła informacje o produktach, które trzeba dodać do platformy `MEC`.
+1. Podczas rozpoczęcia sesji magazyn wysyła informacje o produktach, które trzeba dodać do platformy.
 
     Przykład wiadomości po rozpoczęciu połączenia:
 
@@ -121,7 +107,7 @@ _Cała komunikacja z magazynem jest asynchroniczna_
     ]
     ```
 
-2. Jeżeli pojawi się zamówienie na platformie `MEC` poinformuj magazyn wysyłając wiadomość poprzez Websocket.
+2. Jeżeli pojawi się zamówienie na platformie poinformuj magazyn wysyłając wiadomość poprzez Websocket.
 
     Przykład wiadomości:
 
@@ -162,7 +148,7 @@ _Cała komunikacja z magazynem jest asynchroniczna_
     }
     ```
 
-3. Jeżeli pojawia się zamówienie _spoza platformy_ `MEC` w magazynie to magazyn wysyła informację:
+3. Jeżeli pojawia się zamówienie _spoza platformy_  w magazynie to magazyn wysyła informację:
 
     ```js
     {
@@ -187,10 +173,3 @@ _Cała komunikacja z magazynem jest asynchroniczna_
     }
     ```
 
-# Nieobowiązkowo
-
-1. Stwórz prosty leaderboard najlepiej sprzedających się produktów. <br/>Dodaj tym samym nowy endpoint w `API-MEC`
-
-    ```http
-    GET /products/hot-deals
-    ```

@@ -1,8 +1,9 @@
 # Instalacja
 
 ```
-git clone https://github.com/teh23/MEC.git
-cd ./MEC && npm install
+git clone https://github.com/teh23/Mini-ecommerce
+.git
+cd ./Mini-ecommerce && npm install
 DB_URL="<MONGODB_URL>" npm run dev
 ```
 
@@ -14,7 +15,7 @@ DB_URL="<MONGODB_URL>" npm run dev
 - Platforma zawiera dwa modele danych -> model produktu oraz model zamówień złożonych na platformie.
 - Platforma  powinien mieć przyjazną dla użytkownika warstwę frontendową.
 - Platforma  powinien udostępniać `REST API` 
-- Każdy produkt na platformie MEC ma swoją nazwę, cenę, liczbę sztuk dostępnych w magazynie oraz unikalny identyfikator.
+- Każdy produkt na platformie  ma swoją nazwę, cenę, liczbę sztuk dostępnych w magazynie oraz unikalny identyfikator.
 - Proces zamówienia na warstwie frontendowej odbywa się poprzez kliknięcie przycisku pod produktem `ZAMÓW TERAZ`.
 - Jeżeli brakuje produktu w magazynie przycisk `ZAMÓW TERAZ` powinien być zablokowany. (W razie problemów z synchronizacją powinien pokazywać się odpowiedni komunikat)
 - Klient powinien móc zamówić dowolną liczbę sztuk danego produktu (która oczywiście jest mniejsza bądź równa niż liczba sztuk dostępnych w magazynie)
@@ -68,7 +69,7 @@ Oczekiwane odpowiedzi:
 -   `200 OK`
 -   `404 Not Found`
 
-## Wszystkie produkty na platformie MEC
+## Wszystkie produkty na platformie 
 
 ```http
 GET /products

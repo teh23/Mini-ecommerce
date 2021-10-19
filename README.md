@@ -1,13 +1,12 @@
 # Instalacja
 
 ```
-git clone https://github.com/teh23/Mini-ecommerce
-.git
+git clone https://github.com/teh23/Mini-ecommerce.git
 cd ./Mini-ecommerce && npm install
 DB_URL="<MONGODB_URL>" npm run dev
 ```
 
-## [Preview](https://powerful-eyrie-28917.herokuapp.com)
+## [Preview](https://vast-tor-33618.herokuapp.com)
 
 # Mini platforma e-commerce
 

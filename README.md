@@ -81,9 +81,8 @@ Oczekiwane odpowiedzi:
 # Instrukcja Magazynu
 
 Adres Websocketa:
-`wss://shielded-escarpment-92522.herokuapp.com/`
+`ws://shielded-escarpment-92522.herokuapp.com/`
 
-_Cała komunikacja z magazynem jest asynchroniczna_
 
 1. Podczas rozpoczęcia sesji magazyn wysyła informacje o produktach, które trzeba dodać do platformy.
 
